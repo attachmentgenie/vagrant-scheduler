@@ -6,4 +6,4 @@ nodes:
       cpus: 3
       ip: 192.168.45.43
       memory: 2048
-virtualbox_group: '/Vagrant/example'
+virtualbox_group: '/Vagrant/hypervisor'
