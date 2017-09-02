@@ -1,0 +1,8 @@
+---
+profiles::etcd: true
+profiles::kubernetes::flannel: true
+profiles::kubernetes::kubernetes: true
+profiles::website::nginx: true
+profiles::website::nginx::vhosts:
+  kubernetes.hypervisor.vagrant:
+    proxy: 'http://127.0.0.1:9090'

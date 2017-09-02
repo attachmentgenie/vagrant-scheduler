@@ -1,3 +1,5 @@
 ---
-profiles::firewall::ensure: stopped
-stacks::bootstrap::firewall: true
+classes:
+ - roles::hypervisor
+profiles::bootstrap::firewall: true
+profiles::bootstrap::firewall::ensure: stopped
