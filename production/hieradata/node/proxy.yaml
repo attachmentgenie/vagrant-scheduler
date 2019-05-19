@@ -1,0 +1,18 @@
+---
+classes:
+  - roles::website
+profiles::orchestration::consul::services:
+  traefik:
+    checks:
+      - http: 'http://%{::ipaddress_eth1}:8080'
+        interval: 10s
+    port: 8080
+    tags:
+      - "traefik"
+      - "proxy"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:dashboard.traefik"
+profiles::website::traefik: true
+profiles::website::traefik::consul_domain: 'traefik'
+profiles::website::traefik::consul_endpoint: '%{::ipaddress_eth1}:8500'
+...

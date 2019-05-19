@@ -1,5 +1,37 @@
 ---
 classes:
- - roles::hypervisor
+ - roles::scheduler
 profiles::bootstrap::firewall: true
-profiles::bootstrap::firewall::ensure: stopped
+profiles::bootstrap::firewall::purge: false
+profiles::bootstrap::puppet: true
+profiles::bootstrap::puppet::puppetmaster: puppet.service.consul
+profiles::bootstrap::puppet::runinterval: 180
+profiles::bootstrap::puppet::splaylimit: 180s
+profiles::orchestration::consul: true
+profiles::orchestration::consul::client_address: '%{::ipaddress_eth1}'
+profiles::orchestration::consul::config:
+ client_addr: '%{::ipaddress_eth1}'
+ data_dir: /opt/consul
+ datacenter: services
+ retry_join:
+  - 192.168.45.42
+profiles::orchestration::consul::searchpath:
+ - 'service.consul'
+profiles::orchestration::consul::name_servers:
+ - '%{::ipaddress_eth1}'
+ - 10.0.2.3
+profiles::orchestration::consul::options: '-bind=%{::ipaddress_eth1} -enable-script-checks -syslog'
+profiles::orchestration::consul::resolv: true
+profiles::scheduling::nomad::config:
+ advertise:
+   http: '%{::ipaddress_eth1}:4646'
+   rpc: '%{::ipaddress_eth1}:4647'
+   serf: '%{::ipaddress_eth1}:4648'
+ client:
+   enabled: true
+   network_interface: eth1
+ consul:
+   address: "%{::ipaddress_eth1}:8500"
+ data_dir: /opt/nomad
+ datacenter: services
+...

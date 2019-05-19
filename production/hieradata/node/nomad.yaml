@@ -1,0 +1,46 @@
+---
+profiles::orchestration::consul::config:
+  bootstrap_expect: 1
+  client_addr: '%{::ipaddress_eth1}'
+  data_dir: /opt/consul
+  datacenter: services
+  server: true
+  ui: true
+profiles::orchestration::consul::server: true
+profiles::orchestration::consul::services:
+  consul-ui:
+    checks:
+      - http: 'http://%{::ipaddress_eth1}:8500'
+        interval: 10s
+    port: 8500
+    tags:
+      - "consul"
+      - "sd"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:consul.traefik"
+  nomad-ui:
+    checks:
+      - http: 'http://%{::ipaddress_eth1}:4646'
+        interval: 10s
+    port: 4646
+    tags:
+      - "nomad"
+      - "scheduler"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:nomad.traefik"
+profiles::orchestration::consul::ui: true
+profiles::runtime::docker: false
+profiles::scheduling::nomad: true
+profiles::scheduling::nomad::config:
+  advertise:
+    http: '%{::ipaddress_eth1}:4646'
+    rpc: '%{::ipaddress_eth1}:4647'
+    serf: '%{::ipaddress_eth1}:4648'
+  consul:
+    address: "%{::ipaddress_eth1}:8500"
+  data_dir: /opt/nomad
+  datacenter: services
+  server:
+    enabled: true
+    bootstrap_expect: 1
+...

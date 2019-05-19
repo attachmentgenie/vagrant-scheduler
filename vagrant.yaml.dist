@@ -1,9 +1,42 @@
 ---
 nodes:
-    - name: kubernetes
-      hostname: kubernetes.hypervisor.vagrant
-      box: bento/centos-7.3
-      cpus: 3
+    - name: puppetmaster
+      hostname: puppet.scheduler.vagrant
+      box: bento/centos-7.6
+      ip: 192.168.45.41
+      cpus: 2
+      memory: 6144
+      synced_folders:
+        - src: 'production'
+          dst: '/etc/puppetlabs/code/environments/production'
+    - name: nomad
+      hostname: nomad.scheduler.vagrant
+      box: bento/centos-7.6
+      cpus: 1
+      ip: 192.168.45.42
+      synced_folders:
+        - src: 'jobs'
+          dst: '/home/vagrant/jobs'
+      provision_type:  puppet_agent
+      puppetmaster: puppet.scheduler.vagrant
+      provision_shell: "/usr/local/bin/nomad job run -detach /home/vagrant/jobs/example.nomad"
+    - name: proxy
+      hostname: proxy.scheduler.vagrant
+      aliases: consul.traefik example.traefik nomad.traefik dashboard.traefik
+      box: bento/centos-7.6
       ip: 192.168.45.43
-      memory: 2048
-virtualbox_group: '/Vagrant/hypervisor'
+      provision_type: puppet_agent
+      puppetmaster: puppet.scheduler.vagrant
+    - name: node1
+      hostname: node1.scheduler.vagrant
+      box: bento/centos-7.6
+      ip: 192.168.45.44
+      provision_type: puppet_agent
+      puppetmaster: puppet.scheduler.vagrant
+    - name: node2
+      hostname: node2.scheduler.vagrant
+      box: bento/centos-7.6
+      ip: 192.168.45.45
+      provision_type: puppet_agent
+      puppetmaster: puppet.scheduler.vagrant
+virtualbox_group: '/Vagrant/scheduler'

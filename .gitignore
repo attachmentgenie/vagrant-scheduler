@@ -1,2 +1,3 @@
 production/hiera.yaml.rpmnew
 vagrant.yaml
+*.rpmnew

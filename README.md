@@ -16,29 +16,26 @@ vagrant starter kit
 ## Setup
     vagrant up
 
-## Puppet Development
-
-### Hiera
-
-the puppet master deploys a fairly default hiera.yaml
-
-    [vagrant@puppetmaster ~]$ cat /etc/puppet/hiera.yaml 
-    ---
-    # Managed by puppet
-    :backends:
-      - yaml
-    :hierarchy:
-      - "node/%{::hostname}"
-      - "environment/%{::environment}"
-      - "common"
-    :yaml:
-      :datadir: "/var/lib/hiera"
-
-### Manifests
-
-Place your own manifests in this directory. A fairly standard default.pp is already present.
-
-### Modules
-
-Place your own modules in this directory. 5 modules are already present one of which is stdlib.
+## TLDR
+    
+    - name: puppetmaster, puppetserver
+    - name: nomad, nomad and consul server
+      nomad job:
+        - example:
+            type: docker
+            image: nginx
+            constraint: "distinct_hosts => true"
+            count: 2
+      public_vhosts:
+        - consul.scheduler.vagrant:8500, consul dashboard
+        - nomad.scheduler.vagrant:4646, nomad dashboard
+    - name: proxy, traefik
+      public_vhosts:
+        - proxy.website.vagrant:8080, traefik dashboard
+        - consul.traefik, traefik frontend to consul dashboard backend (consul_catalog)
+        - dashboard.traefik, traefik frontend to traefik dashboard backend (consul_catalog)
+        - example.traefik, traefik fronted to example nomad job backend (consul_catalog)
+        - nomad.traefik, traefik frontend to nomad dashboard backend (consul_catalog)
+    - name: node1, nomad client, consul client, docker
+    - name: node2, nomad client, consul client, docker
 

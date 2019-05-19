@@ -10,21 +10,36 @@
 [submodule "modules/firewall"]
 	path = production/modules/firewall
 	url = git@github.com:puppetlabs/puppetlabs-firewall.git
-[submodule "production/modules/nginx"]
-	path = production/modules/nginx
-	url = https://github.com/voxpupuli/puppet-nginx.git
-[submodule "production/modules/docker"]
-	path = production/modules/docker
-	url = https://github.com/garethr/garethr-docker.git
+[submodule "production/modules/consul"]
+	path = production/modules/consul
+	url = https://github.com/solarkennedy/puppet-consul.git
+[submodule "production/modules/archive"]
+	path = production/modules/archive
+	url = https://github.com/voxpupuli/puppet-archive.git
+[submodule "production/modules/systemd"]
+	path = production/modules/systemd
+	url = https://github.com/camptocamp/puppet-systemd.git
+[submodule "production/modules/dnsmasq"]
+	path = production/modules/dnsmasq
+	url = https://github.com/saz/puppet-dnsmasq.git
+[submodule "production/modules/resolve_conf"]
+	path = production/modules/resolv_conf
+	url = https://github.com/saz/puppet-resolv_conf.git
+[submodule "production/modules/traefik"]
+	path = production/modules/traefik
+	url = git@github.com:attachmentgenie/puppet-traefik.git
+[submodule "production/modules/nomad"]
+	path = production/modules/nomad
+	url = git@github.com:attachmentgenie/puppet-nomad.git 
 [submodule "production/modules/concat"]
 	path = production/modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat.git
-[submodule "production/modules/kubernetes"]
-	path = production/modules/kubernetes
-	url = https://github.com/cristifalcas/puppet-kubernetes.git
-[submodule "production/modules/etcd"]
-	path = production/modules/etcd
-	url = https://github.com/cristifalcas/puppet-etcd.git
-[submodule "production/modules/flannel"]
-	path = production/modules/flannel
-	url = https://github.com/cristifalcas/puppet-flannel.git
+[submodule "production/modules/docker"]
+	path = production/modules/docker
+	url = https://github.com/puppetlabs/puppetlabs-docker.git
+[submodule "production/modules/puppet"]
+	path = production/modules/puppet
+	url = https://github.com/theforeman/puppet-puppet.git
+[submodule "production/modules/puppetserver_gem"]
+	path = production/modules/puppetserver_gem
+	url = https://github.com/puppetlabs/puppetlabs-puppetserver_gem.git
