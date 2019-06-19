@@ -1,0 +1,17 @@
+name: nomad
+title: InSpec Profile
+maintainer: Bram Vogelaar
+copyright: The Authors
+copyright_email: bram@attachmentgenie.com
+license: Apache-2.0
+summary: An InSpec Compliance Profile
+version: 0.1.0
+depends:
+  - name: consul_server
+    path: ../profiles/consul_server
+  - name: nomad_server
+    path: ../profiles/nomad_server
+  - name: vault
+    path: ../profiles/vault
+supports:
+  platform: os

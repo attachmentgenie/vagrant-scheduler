@@ -6,6 +6,7 @@ profiles::bootstrap::puppet::dns_alt_names:
   - 'puppet.service.consul'
 profiles::bootstrap::puppet::hiera_yaml_datadir: "/etc/puppetlabs/code/environments/production/hieradata"
 profiles::bootstrap::puppet::install_toml: true
+profiles::bootstrap::puppet::install_vault: true
 profiles::bootstrap::puppet::server: true
 profiles::bootstrap::puppet::server_external_nodes: ''
 profiles::orchestration::consul::services:

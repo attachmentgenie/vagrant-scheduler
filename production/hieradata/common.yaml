@@ -10,11 +10,12 @@ profiles::bootstrap::puppet::splaylimit: 180s
 profiles::orchestration::consul: true
 profiles::orchestration::consul::client_address: '%{::ipaddress_eth1}'
 profiles::orchestration::consul::config:
+  retry_join:
+    - nomad.scheduler.vagrant
+profiles::orchestration::consul::config_defaults:
  client_addr: '%{::ipaddress_eth1}'
- data_dir: /opt/consul
+ data_dir: /var/lib/consul
  datacenter: services
- retry_join:
-  - 192.168.45.42
 profiles::orchestration::consul::searchpath:
  - 'service.consul'
 profiles::orchestration::consul::name_servers:
@@ -23,15 +24,20 @@ profiles::orchestration::consul::name_servers:
 profiles::orchestration::consul::options: '-bind=%{::ipaddress_eth1} -enable-script-checks -syslog'
 profiles::orchestration::consul::resolv: true
 profiles::scheduling::nomad::config:
+  client:
+    enabled: true
+    network_interface: eth1
+profiles::scheduling::nomad::config_defaults:
  advertise:
    http: '%{::ipaddress_eth1}:4646'
    rpc: '%{::ipaddress_eth1}:4647'
    serf: '%{::ipaddress_eth1}:4648'
- client:
-   enabled: true
-   network_interface: eth1
  consul:
    address: "%{::ipaddress_eth1}:8500"
- data_dir: /opt/nomad
+ data_dir: /var/lib/nomad
  datacenter: services
+ vault:
+   enabled: true
+   address: 'http://active.vault.service.consul:8200'
+   tls_skip_verify: true
 ...

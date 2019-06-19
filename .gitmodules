@@ -43,3 +43,9 @@
 [submodule "production/modules/puppetserver_gem"]
 	path = production/modules/puppetserver_gem
 	url = https://github.com/puppetlabs/puppetlabs-puppetserver_gem.git
+[submodule "production/modules/vault"]
+	path = production/modules/vault
+	url = https://github.com/jsok/puppet-vault.git
+[submodule "production/modules/file_capability"]
+	path = production/modules/file_capability
+	url = https://github.com/smoeding/puppet-file_capability.git

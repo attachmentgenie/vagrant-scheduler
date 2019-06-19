@@ -12,6 +12,7 @@ profiles::orchestration::consul::services:
       - "proxy"
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:dashboard.traefik"
+      - "traefik.frontend.auth.basic=admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
 profiles::website::traefik: true
 profiles::website::traefik::consul_domain: 'traefik'
 profiles::website::traefik::consul_endpoint: '%{::ipaddress_eth1}:8500'

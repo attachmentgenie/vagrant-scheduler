@@ -15,14 +15,14 @@ nodes:
       cpus: 1
       ip: 192.168.45.42
       synced_folders:
-        - src: 'jobs'
-          dst: '/home/vagrant/jobs'
+        - src: 'nomad'
+          dst: '/home/vagrant/nomad'
       provision_type:  puppet_agent
       puppetmaster: puppet.scheduler.vagrant
-      provision_shell: "/usr/local/bin/nomad job run -detach /home/vagrant/jobs/example.nomad"
+      provision_shell: "/usr/local/bin/nomad job run -detach /home/vagrant/nomad/example.nomad"
     - name: proxy
       hostname: proxy.scheduler.vagrant
-      aliases: consul.traefik example.traefik nomad.traefik dashboard.traefik
+      aliases: consul.traefik dashboard.traefik demo.traefik example.traefik nomad.traefik vault.traefik
       box: bento/centos-7.6
       ip: 192.168.45.43
       provision_type: puppet_agent

@@ -1,9 +1,6 @@
 ---
 profiles::orchestration::consul::config:
   bootstrap_expect: 1
-  client_addr: '%{::ipaddress_eth1}'
-  data_dir: /opt/consul
-  datacenter: services
   server: true
   ui: true
 profiles::orchestration::consul::server: true
@@ -18,6 +15,7 @@ profiles::orchestration::consul::services:
       - "sd"
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:consul.traefik"
+      - "traefik.frontend.auth.basic=admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
   nomad-ui:
     checks:
       - http: 'http://%{::ipaddress_eth1}:4646'
@@ -28,19 +26,38 @@ profiles::orchestration::consul::services:
       - "scheduler"
       - "traefik.enable=true"
       - "traefik.frontend.rule=Host:nomad.traefik"
+      - "traefik.frontend.auth.basic=admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
+  vault-ui:
+    checks:
+      - http: 'http://%{::ipaddress_eth1}:8200'
+        interval: 10s
+    port: 8200
+    tags:
+      - "vault"
+      - "security"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:vault.traefik"
 profiles::orchestration::consul::ui: true
 profiles::runtime::docker: false
 profiles::scheduling::nomad: true
 profiles::scheduling::nomad::config:
-  advertise:
-    http: '%{::ipaddress_eth1}:4646'
-    rpc: '%{::ipaddress_eth1}:4647'
-    serf: '%{::ipaddress_eth1}:4648'
-  consul:
-    address: "%{::ipaddress_eth1}:8500"
-  data_dir: /opt/nomad
-  datacenter: services
   server:
     enabled: true
     bootstrap_expect: 1
+  vault:
+    create_from_role: nomad-cluster
+    token: 's.krHYYcd8PRzpSBO59AE6sawO'
+profiles::security::vault: true
+profiles::security::vault::extra_config:
+  api_addr: 'https://%{::ipaddress_eth1}:8200'
+  cluster_addr: 'https://%{::ipaddress_eth1}:8201'
+profiles::security::vault::listener:
+  tcp:
+    address: '%{::ipaddress_eth1}:8200'
+    cluster_address: '%{::ipaddress_eth1}:8201'
+    tls_disable: 1
+profiles::security::vault::storage:
+  consul:
+    address: '%{::ipaddress_eth1}:8500'
+    path: 'vault/'
 ...

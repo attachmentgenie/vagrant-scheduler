@@ -1,0 +1,10 @@
+name: vault
+title: InSpec Profile
+maintainer: Bram Vogelaar
+copyright: The Authors
+copyright_email: bram@attachmentgenie.com
+license: Apache-2.0
+summary: An InSpec Compliance Profile
+version: 0.1.0
+supports:
+  platform: os
