@@ -1,5 +1,8 @@
 ---
 profiles::orchestration::consul::config:
+  "addresses": {
+    "http": '127.0.0.1 %{::ipaddress_eth1}'
+  }
   bootstrap_expect: 1
   server: true
   ui: true
@@ -7,7 +10,7 @@ profiles::orchestration::consul::server: true
 profiles::orchestration::consul::services:
   consul-ui:
     checks:
-      - http: 'http://%{::ipaddress_eth1}:8500'
+      - http: 'http://127.0.0.1:8500'
         interval: 10s
     port: 8500
     tags:
@@ -46,7 +49,7 @@ profiles::scheduling::nomad::config:
     bootstrap_expect: 1
   vault:
     create_from_role: nomad-cluster
-    token: 's.krHYYcd8PRzpSBO59AE6sawO'
+    token: 's.MR0LwJbN9KbwP5EufWqZkZ48'
 profiles::security::vault: true
 profiles::security::vault::extra_config:
   api_addr: 'https://%{::ipaddress_eth1}:8200'
@@ -58,6 +61,6 @@ profiles::security::vault::listener:
     tls_disable: 1
 profiles::security::vault::storage:
   consul:
-    address: '%{::ipaddress_eth1}:8500'
+    address: '127.0.0.1:8500'
     path: 'vault/'
 ...

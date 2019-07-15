@@ -1,4 +1,4 @@
-job "postgres-nomad-demo" {
+job "demo-db" {
   datacenters = ["services"]
 
   group "db" {
@@ -15,7 +15,7 @@ job "postgres-nomad-demo" {
       resources {
         network {
           port  "db"{
-            static = 5432
+            static = 25432
           }
         }
       }

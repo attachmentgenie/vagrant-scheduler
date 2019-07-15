@@ -1,0 +1,6 @@
+---
+classes:
+  - roles::dns
+profiles::dns::bind: true
+profiles::dns::bind::forward_consul: true
+...

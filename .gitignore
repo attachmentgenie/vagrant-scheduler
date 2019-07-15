@@ -4,6 +4,7 @@ test/*/inspec.lock
 test/*/profiles/*/inspec.lock
 vagrant.yaml
 *.rpmnew
+*.rpmsave
 *.vdi
 
 # Module directory

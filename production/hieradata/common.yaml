@@ -1,6 +1,12 @@
 ---
 classes:
  - roles::scheduler
+profiles::bootstrap::resolv: true
+profiles::bootstrap::resolv::name_servers:
+  - 192.168.45.42
+  - 10.0.2.3
+profiles::bootstrap::resolv::searchpath:
+  - 'service.consul'
 profiles::bootstrap::firewall: true
 profiles::bootstrap::firewall::purge: false
 profiles::bootstrap::puppet: true
@@ -8,21 +14,13 @@ profiles::bootstrap::puppet::puppetmaster: puppet.service.consul
 profiles::bootstrap::puppet::runinterval: 180
 profiles::bootstrap::puppet::splaylimit: 180s
 profiles::orchestration::consul: true
-profiles::orchestration::consul::client_address: '%{::ipaddress_eth1}'
 profiles::orchestration::consul::config:
   retry_join:
     - nomad.scheduler.vagrant
 profiles::orchestration::consul::config_defaults:
- client_addr: '%{::ipaddress_eth1}'
+ advertise_addr: '%{::ipaddress_eth1}'
  data_dir: /var/lib/consul
  datacenter: services
-profiles::orchestration::consul::searchpath:
- - 'service.consul'
-profiles::orchestration::consul::name_servers:
- - '%{::ipaddress_eth1}'
- - 10.0.2.3
-profiles::orchestration::consul::options: '-bind=%{::ipaddress_eth1} -enable-script-checks -syslog'
-profiles::orchestration::consul::resolv: true
 profiles::scheduling::nomad::config:
   client:
     enabled: true
@@ -33,7 +31,7 @@ profiles::scheduling::nomad::config_defaults:
    rpc: '%{::ipaddress_eth1}:4647'
    serf: '%{::ipaddress_eth1}:4648'
  consul:
-   address: "%{::ipaddress_eth1}:8500"
+   address: '127.0.0.1:8500'
  data_dir: /var/lib/nomad
  datacenter: services
  vault:

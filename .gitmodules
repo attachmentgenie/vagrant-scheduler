@@ -49,3 +49,15 @@
 [submodule "production/modules/file_capability"]
 	path = production/modules/file_capability
 	url = https://github.com/smoeding/puppet-file_capability.git
+[submodule "production/modules/filemapper"]
+	path = production/modules/filemapper
+	url = https://github.com/voxpupuli/puppet-filemapper.git
+[submodule "production/modules/boolean"]
+	path = production/modules/boolean
+	url = https://github.com/voxpupuli/puppet-boolean.git
+[submodule "production/modules/network"]
+	path = production/modules/network
+	url = https://github.com/m4rx0/puppet-network.git
+[submodule "production/modules/dns"]
+	path = production/modules/dns
+	url = https://github.com/theforeman/puppet-dns.git
