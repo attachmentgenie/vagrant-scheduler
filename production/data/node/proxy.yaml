@@ -15,4 +15,6 @@ profiles::orchestration::consul::services:
       - "traefik.frontend.auth.basic=admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
 profiles::website::traefik: true
 profiles::website::traefik::consul_domain: 'traefik'
+profiles::website::traefik::protocol: 'http'
+profiles::website::traefik::expose_ui: true
 ...

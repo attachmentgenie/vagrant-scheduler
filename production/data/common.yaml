@@ -1,18 +1,18 @@
 ---
 classes:
  - roles::scheduler
-profiles::bootstrap::resolv: true
-profiles::bootstrap::resolv::name_servers:
-  - 192.168.45.42
-  - 10.0.2.3
-profiles::bootstrap::resolv::searchpath:
-  - 'service.consul'
 profiles::bootstrap::firewall: true
 profiles::bootstrap::firewall::purge: false
 profiles::bootstrap::puppet: true
 profiles::bootstrap::puppet::puppetmaster: puppet.service.consul
 profiles::bootstrap::puppet::runinterval: 180
 profiles::bootstrap::puppet::splaylimit: 180s
+profiles::bootstrap::resolv: true
+profiles::bootstrap::resolv::name_servers:
+  - 192.168.45.42
+  - 10.0.2.3
+profiles::bootstrap::resolv::searchpath:
+  - 'service.consul'
 profiles::orchestration::consul: true
 profiles::orchestration::consul::config:
   retry_join:
