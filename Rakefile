@@ -33,3 +33,4 @@ task :inspec, [:node] do |t, args|
     end
   end
 end
+
