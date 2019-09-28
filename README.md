@@ -1,27 +1,32 @@
-#  vagrant-example
+#  vagrant-scheduler
 
-vagrant starter kit 
+A vagrant setup that create container schedulers
 
 ## Requirements
-    Virtualbox                        => https://www.virtualbox.org
-    Vagrant                           => http://www.vagrantup.com
-    vagrant-hostmanager               => vagrant plugin install vagrant-hostmanager
-    vagrant-cachier  (optional)       => vagrant plugin install vagrant-cachier
-    vagrant-puppet-install (optional) => vagrant plugin install vagrant-puppet-install
-    vagrant-triggers (optional)       => vagrant plugin install vagrant-triggers
+    Virtualbox                  => https://www.virtualbox.org
+    Vagrant                     => http://www.vagrantup.com
+    vagrant-hostmanager         => vagrant plugin install vagrant-hostmanager
+    vagrant-puppet-install      => vagrant plugin install vagrant-puppet-install
+    vagrant-cachier  (optional) => vagrant plugin install vagrant-cachier
     
 ## Preparation
+
     git submodule update --init
+    bundle install
     
 ## Setup
+
     vagrant up
 
 ## Inspec tests
 
     bundle exec rake
-    bundle exec rake inspec[proxy] 
+    bundle exec rake inspec[centos7] 
 
 ## TLDR
+
+### (G)UI interfaces
+
     
     - name: puppetmaster, puppetserver
     - name: dns, BIND9 server.
