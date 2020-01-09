@@ -4,7 +4,7 @@ classes:
 profiles::bootstrap::firewall: true
 profiles::bootstrap::firewall::purge: false
 profiles::bootstrap::puppet: true
-profiles::bootstrap::puppet::puppetmaster: puppet.service.consul
+profiles::bootstrap::puppet::puppetmaster: puppet.scheduler.vagrant
 profiles::bootstrap::puppet::runinterval: 180
 profiles::bootstrap::puppet::splaylimit: 180s
 profiles::bootstrap::resolv: true
@@ -21,9 +21,12 @@ profiles::orchestration::consul::config_defaults:
  advertise_addr: '%{::ipaddress_eth1}'
  data_dir: /var/lib/consul
  datacenter: services
+profiles::orchestration::consul::connect: true
 profiles::scheduling::nomad::config:
   client:
     enabled: true
+    options:
+      "driver.whitelist": 'docker'
     network_interface: eth1
 profiles::scheduling::nomad::config_defaults:
  advertise:

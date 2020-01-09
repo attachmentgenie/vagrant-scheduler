@@ -49,3 +49,9 @@
 [submodule "production/modules/dns"]
 	path = production/modules/dns
 	url = https://github.com/theforeman/puppet-dns.git
+[submodule "production/modules/augeasproviders_sysctl"]
+	path = production/modules/augeasproviders_sysctl
+	url = https://github.com/hercules-team/augeasproviders_sysctl.git
+[submodule "production/modules/augeasproviders_core"]
+	path = production/modules/augeasproviders_core
+	url = https://github.com/hercules-team/augeasproviders_core.git

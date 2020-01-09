@@ -2,20 +2,10 @@
 classes:
   - roles::puppetmaster
 profiles::bootstrap::puppet::autosign: '/etc/puppetlabs/puppet/autosign.conf'
-profiles::bootstrap::puppet::dns_alt_names:
-  - 'puppet.service.consul'
 profiles::bootstrap::puppet::hiera_yaml_datadir: "/etc/puppetlabs/code/environments/production/hieradata"
 profiles::bootstrap::puppet::install_toml: true
 profiles::bootstrap::puppet::install_vault: true
 profiles::bootstrap::puppet::server: true
 profiles::bootstrap::puppet::server_external_nodes: ''
-profiles::orchestration::consul::services:
-  puppet:
-    checks:
-      - tcp: '%{::ipaddress_eth1}:8140'
-        interval: 10s
-    port: 8140
-    tags:
-      - "puppet"
 profiles::puppet::puppetmaster: true
 ...

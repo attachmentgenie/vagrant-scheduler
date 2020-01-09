@@ -37,12 +37,14 @@ nodes:
       hostname: node1.scheduler.vagrant
       box: bento/centos-7.6
       ip: 192.168.45.45
+      memory: 2048
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
     - name: node2
       hostname: node2.scheduler.vagrant
       box: bento/centos-7.6
       ip: 192.168.45.46
+      memory: 2048
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
 puppet_version: 6.4.2

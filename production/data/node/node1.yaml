@@ -1,4 +1,5 @@
 ---
 profiles::runtime::docker: true
 profiles::scheduling::nomad: true
+profiles::scheduling::nomad::consul_connect: true
 ...

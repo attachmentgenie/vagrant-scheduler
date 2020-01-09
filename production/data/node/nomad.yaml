@@ -1,7 +1,7 @@
 ---
 profiles::orchestration::consul::config:
-  "addresses": {
-    "http": '127.0.0.1 %{::ipaddress_eth1}'
+  addresses: {
+    http: '127.0.0.1 %{::ipaddress_eth1}'
   }
   bootstrap_expect: 1
   server: true
@@ -44,6 +44,8 @@ profiles::orchestration::consul::ui: true
 profiles::runtime::docker: false
 profiles::scheduling::nomad: true
 profiles::scheduling::nomad::config:
+  client:
+    enabled: false
   server:
     enabled: true
     bootstrap_expect: 1
