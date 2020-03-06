@@ -25,6 +25,7 @@ profiles::orchestration::consul::connect: true
 profiles::scheduling::nomad::config:
   client:
     enabled: true
+    node_class: 'vagrant'
     options:
       "driver.whitelist": 'docker'
     network_interface: eth1

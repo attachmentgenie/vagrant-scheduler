@@ -73,13 +73,13 @@ A vagrant setup that create container schedulers
 ### Example
 
 The example job is automatically started during the provisioning of the nomad node. This shows that one can schedule jobs without the required constrains being in place or even without any clients online.
-The job will patiently wait until nodes that meet the constrains become available. When node1 comes online 1 of the copies is already started there, while web build out node2. 
+The job will patiently wait until nodes that meet the constrains become available. When node1 comes online 1 of the copies is already started there, while we build out node2. 
 
     curl http://example.traefik/
 
 ### Demo
 
-The demo job automates the nomad vault integration example [1], and is a some what more elaborate job that requires a bit of orchestration.
+The demo job automates the nomad vault integration example [1], and is a somewhat more elaborate job that requires a bit of orchestration.
 
     intialize and unlock vault, single unlock setup is fine for this vagrant setup, please set up something more robust in prod.
     copy the root token into terraform/vault.tf and production/hieradata/node/nomad.yaml, again this is fine for this vagrant setup, please set up something more robust in prod.
