@@ -28,7 +28,7 @@ nodes:
       provision_shell: "/usr/local/bin/nomad job run -detach /home/vagrant/nomad/example.nomad"
     - name: proxy
       hostname: proxy.scheduler.vagrant
-      aliases: consul.traefik dashboard.traefik demo.traefik example.traefik nomad.traefik vault.traefik
+      aliases: consul.traefik dashboard.traefik demo.traefik example.traefik gateway.traefik nomad.traefik vault.traefik
       box: bento/centos-7.7
       ip: 192.168.45.44
       provision_type: puppet_agent
