@@ -22,9 +22,6 @@
 [submodule "production/modules/resolve_conf"]
 	path = production/modules/resolv_conf
 	url = https://github.com/saz/puppet-resolv_conf.git
-[submodule "production/modules/traefik"]
-	path = production/modules/traefik
-	url = git@github.com:attachmentgenie/puppet-traefik.git
 [submodule "production/modules/nomad"]
 	path = production/modules/nomad
 	url = git@github.com:attachmentgenie/puppet-nomad.git 
@@ -55,3 +52,6 @@
 [submodule "production/modules/augeasproviders_core"]
 	path = production/modules/augeasproviders_core
 	url = https://github.com/hercules-team/augeasproviders_core.git
+[submodule "production/modules/traefik2"]
+	path = production/modules/traefik2
+	url = git@github.com:attachmentgenie/attachmentgenie-traefik2.git

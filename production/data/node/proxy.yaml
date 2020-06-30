@@ -1,20 +1,18 @@
 ---
 classes:
   - roles::website
-profiles::orchestration::consul::services:
-  traefik:
-    checks:
-      - http: 'http://%{::ipaddress_eth1}:8080'
-        interval: 10s
-    port: 8080
-    tags:
-      - "traefik"
-      - "proxy"
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:dashboard.traefik"
-      - "traefik.frontend.auth.basic=admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
-profiles::website::traefik: true
-profiles::website::traefik::consul_domain: 'traefik'
-profiles::website::traefik::protocol: 'http'
-profiles::website::traefik::expose_ui: true
+profiles::website::traefik2: true
+profiles::website::traefik2::dynamic_config:
+  http:
+    middlewares:
+      auth:
+        basicAuth:
+          users:
+            - "admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
+profiles::website::traefik2::expose_ui: true
+profiles::website::traefik2::protocol: 'http'
+profiles::website::traefik2::sd_service_tags:
+  - "traefik.enable=true"
+  - "traefik.http.routers.traefik2.middlewares=auth@file"
+  - "traefik.http.routers.traefik2.rule=Host(`dashboard.traefik`)"
 ...

@@ -7,39 +7,11 @@ profiles::orchestration::consul::config:
   server: true
   ui: true
 profiles::orchestration::consul::server: true
-profiles::orchestration::consul::services:
-  consul-ui:
-    checks:
-      - http: 'http://127.0.0.1:8500'
-        interval: 10s
-    port: 8500
-    tags:
-      - "consul"
-      - "sd"
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:consul.traefik"
-      - "traefik.frontend.auth.basic=admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
-  nomad-ui:
-    checks:
-      - http: 'http://%{::ipaddress_eth1}:4646'
-        interval: 10s
-    port: 4646
-    tags:
-      - "nomad"
-      - "scheduler"
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:nomad.traefik"
-      - "traefik.frontend.auth.basic=admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
-  vault-ui:
-    checks:
-      - http: 'http://%{::ipaddress_eth1}:8200'
-        interval: 10s
-    port: 8200
-    tags:
-      - "vault"
-      - "security"
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:vault.traefik"
+profiles::orchestration::consul::manage_sd_service: true
+profiles::orchestration::consul::sd_service_tags:
+  - 'traefik.enable=true'
+  - "traefik.http.routers.consul-ui.middlewares=auth@file"
+  - "traefik.http.routers.consul-ui.rule=Host(`consul.traefik`)"
 profiles::orchestration::consul::ui: true
 profiles::runtime::docker: false
 profiles::scheduling::nomad: true
@@ -52,6 +24,10 @@ profiles::scheduling::nomad::config:
   vault:
     create_from_role: nomad-cluster
     token: 's.MR0LwJbN9KbwP5EufWqZkZ48'
+profiles::scheduling::nomad::sd_service_tags:
+  - "traefik.enable=true"
+  - "traefik.http.routers.nomad-ui.middlewares=auth@file"
+  - "traefik.http.routers.nomad-ui.rule=Host(`nomad.traefik`)"
 profiles::security::vault: true
 profiles::security::vault::extra_config:
   api_addr: 'https://%{::ipaddress_eth1}:8200'
@@ -61,6 +37,10 @@ profiles::security::vault::listener:
     address: '%{::ipaddress_eth1}:8200'
     cluster_address: '%{::ipaddress_eth1}:8201'
     tls_disable: 1
+profiles::security::vault::manage_sd_service: true
+profiles::security::vault::sd_service_tags:
+  - "traefik.enable=true"
+  - "traefik.http.routers.vault-ui.rule=Host(`vault.traefik`)"
 profiles::security::vault::storage:
   consul:
     address: '127.0.0.1:8500'
