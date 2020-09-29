@@ -2,6 +2,30 @@
 classes:
   - roles::website
 profiles::website::traefik2: true
+profiles::website::traefik2::static_config:
+  accessLog:
+    filePath: "/var/log/traefik2/access.log"
+  api:
+    dashboard: true
+    insecure: true
+  entryPoints:
+    http:
+      address: ':80'
+  log:
+    filePath: "/var/log/traefik2/traefik.log"
+  metrics:
+    prometheus:
+      addEntryPointsLabels: true
+      addServicesLabels: true
+  ping: {}
+  providers:
+    consulCatalog:
+      endpoint:
+        address: '127.0.0.1:8500'
+      exposedByDefault: false
+    file:
+      filename: "/etc/traefik2/dynamic.yaml"
+      watch: true
 profiles::website::traefik2::dynamic_config:
   http:
     middlewares:
@@ -11,6 +35,7 @@ profiles::website::traefik2::dynamic_config:
             - "admin:$apr1$X3YoCPnq$HH/fha9lWqt.zPCmdbSL90"
 profiles::website::traefik2::expose_ui: true
 profiles::website::traefik2::protocol: 'http'
+profiles::website::traefik2::manage_sd_service: true
 profiles::website::traefik2::sd_service_tags:
   - "traefik.enable=true"
   - "traefik.http.routers.traefik2.middlewares=auth@file"

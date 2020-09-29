@@ -11,13 +11,13 @@ nodes:
           dst: '/etc/puppetlabs/code/environments/production'
     - name: dns
       hostname: dns.scheduler.vagrant
-      box: bento/centos-8.2
+      box: bento/centos-7.8
       ip: 192.168.45.42
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
     - name: nomad
       hostname: nomad.scheduler.vagrant
-      box: bento/centos-8.2
+      box: bento/centos-7.8
       cpus: 1
       ip: 192.168.45.43
       synced_folders:
@@ -29,20 +29,20 @@ nodes:
     - name: proxy
       hostname: proxy.scheduler.vagrant
       aliases: consul.traefik dashboard.traefik demo.traefik example.traefik gateway.traefik nomad.traefik vault.traefik
-      box: bento/centos-8.2
+      box: bento/centos-7.8
       ip: 192.168.45.44
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
     - name: node1
       hostname: node1.scheduler.vagrant
-      box: bento/centos-8.2
+      box: bento/centos-7.8
       ip: 192.168.45.45
       memory: 2048
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
     - name: node2
       hostname: node2.scheduler.vagrant
-      box: bento/centos-8.2
+      box: bento/centos-7.8
       ip: 192.168.45.46
       memory: 2048
       provision_type: puppet_agent
