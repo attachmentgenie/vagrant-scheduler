@@ -22,6 +22,7 @@ profiles::orchestration::consul::config_defaults:
  data_dir: /var/lib/consul
  datacenter: services
 profiles::orchestration::consul::connect: true
+profiles::orchestration::consul::sd_service_endpoint: 'http://%{::ipaddress_eth1}:8500'
 profiles::scheduling::nomad::config:
   client:
     enabled: true
@@ -42,4 +43,6 @@ profiles::scheduling::nomad::config_defaults:
    enabled: true
    address: 'http://active.vault.service.consul:8200'
    tls_skip_verify: true
+profiles::scheduling::nomad::sd_service_endpoint: 'http://%{::ipaddress_eth1}:4646'
+profiles::security::vault::sd_service_endpoint: 'http://%{::ipaddress_eth1}:8200'
 ...

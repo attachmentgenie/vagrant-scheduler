@@ -48,12 +48,12 @@ EOT
 }
 
 resource "vault_token_auth_backend_role" "nomad-cluster" {
-  allowed_policies = ["access-tables"]
-  explicit_max_ttl    = "0"
-  role_name           = "nomad-cluster"
-  orphan              = true
-  period              = "259200"
-  renewable           = true
+  allowed_policies       = ["access-tables"]
+  role_name              = "nomad-cluster"
+  orphan                 = true
+  token_explicit_max_ttl = "0"
+  token_period           = "259200"
+  renewable              = true
 }
 
 resource "vault_mount" "database" {
@@ -72,9 +72,9 @@ resource "vault_database_secret_backend_connection" "postgresql" {
 }
 
 resource "vault_database_secret_backend_role" "accessdb" {
-  backend             = vault_mount.database.path
-  name                = "accessdb"
-  db_name             = "postgresql"
+  backend = vault_mount.database.path
+  name    = "accessdb"
+  db_name = "postgresql"
   creation_statements = [
     "CREATE USER \"{{name}}\" WITH ENCRYPTED PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';",
     "GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO \"{{name}}\";",

@@ -47,4 +47,5 @@ nodes:
       memory: 2048
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
+puppet_version: 6.19.1
 virtualbox_group: '/Vagrant/scheduler'

@@ -43,6 +43,8 @@ A vagrant setup that create container schedulers
         - demo-web:
             type: docker
             image: hashicorp/nomad-vault-demo:latest
+            constraint: "distinct_hosts => true"
+            count: 2
       public_vhosts:
         - http://nomad.scheduler.vagrant:8500
         - http://nomad.scheduler.vagrant:4646
@@ -79,10 +81,10 @@ The job will patiently wait until nodes that meet the constrains become availabl
 
 ### Demo
 
-The demo job automates the nomad vault integration example [1], and is a somewhat more elaborate job that requires a bit of orchestration.
+The demo job automates the nomad vault integration example [1], and is a somewhat more elaborate job that requires a bit of manual orchestration.
 
-    intialize and unlock vault, single unlock setup is fine for this vagrant setup, please set up something more robust in prod.
-    copy the root token into terraform/vault.tf and production/hieradata/node/nomad.yaml, again this is fine for this vagrant setup, please set up something more robust in prod.
+intialize and unlock vault, single unlock setup is fine for this vagrant setup, please set up something more robust in prod.
+copy the root token into terraform/vault.tf and production/hieradata/node/nomad.yaml, again this is fine for this vagrant setup, please set up something more robust in prod.
 
     export NOMAD_ADDR=http://nomad.scheduler.vagrant:4646
     nomad job run nomad/demo-db.nomad

@@ -1,12 +1,36 @@
 job "demo-web" {
   datacenters = ["services"]
+  type = "service"
+
+  constraint {
+    operator  = "distinct_hosts"
+    value     = "true"
+  }
 
   group "demo" {
     count = 2
 
-    constraint {
-      operator  = "distinct_hosts"
-      value     = "true"
+    network {
+      port "http" {
+        to = 8080
+      }
+    }
+
+    service {
+      name = "demo-web"
+      port = "http"
+
+      tags = [
+        "urlprefix-/",
+        "traefik.enable=true",
+        "traefik.http.routers.demo-web.rule=Host(`demo.traefik`)"
+      ]
+
+      check {
+        type     = "tcp"
+        interval = "2s"
+        timeout  = "2s"
+      }
     }
 
     task "server" {
@@ -18,9 +42,7 @@ job "demo-web" {
       driver = "docker"
       config {
         image = "hashicorp/nomad-vault-demo:latest"
-        port_map {
-          http = 8080
-        }
+        ports = ["http"]
 
         volumes = [
           "secrets/config.json:/etc/demo/config.json"
@@ -40,29 +62,6 @@ job "demo-web" {
 {{ end }}
 EOF
         destination = "secrets/config.json"
-      }
-
-      resources {
-        network {
-          port "http" {}
-        }
-      }
-
-      service {
-        name = "demo-web"
-        port = "http"
-
-        tags = [
-          "urlprefix-/",
-          "traefik.enable=true",
-          "traefik.frontend.rule=Host:demo.traefik"
-        ]
-
-        check {
-          type     = "tcp"
-          interval = "2s"
-          timeout  = "2s"
-        }
       }
     }
   }

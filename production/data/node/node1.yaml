@@ -2,4 +2,5 @@
 profiles::runtime::docker: true
 profiles::scheduling::nomad: true
 profiles::scheduling::nomad::consul_connect: true
+profiles::scheduling::nomad::manage_sd_service: false
 ...
