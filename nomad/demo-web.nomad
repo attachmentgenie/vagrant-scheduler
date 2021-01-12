@@ -11,6 +11,7 @@ job "demo-web" {
     count = 2
 
     network {
+      mode = "bridge"
       port "http" {
         to = 8080
       }
@@ -26,10 +27,16 @@ job "demo-web" {
         "traefik.http.routers.demo-web.rule=Host(`demo.traefik`)"
       ]
 
-      check {
-        type     = "tcp"
-        interval = "2s"
-        timeout  = "2s"
+      connect {
+        sidecar_service {
+          tags = ["sidecar"]
+          proxy {
+            upstreams {
+              destination_name = "demo-db"
+              local_bind_port = 5432
+            }
+          }
+        }
       }
     }
 
@@ -43,7 +50,6 @@ job "demo-web" {
       config {
         image = "hashicorp/nomad-vault-demo:latest"
         ports = ["http"]
-
         volumes = [
           "secrets/config.json:/etc/demo/config.json"
         ]
@@ -53,8 +59,8 @@ job "demo-web" {
         data = <<EOF
 {{ with secret "database/creds/accessdb" }}
   {
-    "host": "database.service.consul",
-    "port": 25432,
+    "host": "localhost",
+    "port": 5432,
     "username": "{{ .Data.username }}",
     "password": {{ .Data.password | toJSON }},
     "db": "postgres"

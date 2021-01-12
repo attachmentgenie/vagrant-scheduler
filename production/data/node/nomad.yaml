@@ -5,7 +5,11 @@ profiles::orchestration::consul::config:
   }
   bootstrap_expect: 1
   server: true
-  ui: true
+  ui_config:
+    enabled: true
+    metrics_provider: "prometheus"
+    metrics_proxy:
+      base_url: "http://192.168.45.46:21538/"
 profiles::orchestration::consul::server: true
 profiles::orchestration::consul::manage_sd_service: true
 profiles::orchestration::consul::sd_service_tags:
@@ -23,7 +27,7 @@ profiles::scheduling::nomad::config:
     bootstrap_expect: 1
   vault:
     create_from_role: nomad-cluster
-    token: 's.CHANGEME'
+    token: 's.RxExpkyh2bYBZVmXjTwzEi8G'
 profiles::scheduling::nomad::sd_service_tags:
   - "traefik.enable=true"
   - "traefik.http.routers.nomad-ui.middlewares=auth@file"
@@ -45,4 +49,7 @@ profiles::security::vault::storage:
   consul:
     address: '127.0.0.1:8500'
     path: 'vault/'
+profiles::security::vault::telemetry:
+  prometheus_retention_time: "30s"
+  disable_hostname: true
 ...

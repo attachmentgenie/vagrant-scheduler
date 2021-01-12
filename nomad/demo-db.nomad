@@ -1,23 +1,22 @@
 job "demo-db" {
   datacenters = ["services"]
+  type = "service"
 
   group "db" {
 
     network {
+      mode = "bridge"
       port  "db"{
-        static = 25432
         to = 5432
       }
     }
 
     service {
-      name = "database"
+      name = "demo-db"
       port = "db"
 
-      check {
-        type     = "tcp"
-        interval = "2s"
-        timeout  = "2s"
+      connect {
+        sidecar_service {}
       }
     }
 

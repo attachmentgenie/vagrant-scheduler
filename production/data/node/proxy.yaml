@@ -26,6 +26,9 @@ profiles::website::traefik2::static_config:
     file:
       filename: "/etc/traefik2/dynamic.yaml"
       watch: true
+  tracing:
+    zipkin:
+      httpEndpoint: http://tempo.service.consul:9411/api/v2/spans
 profiles::website::traefik2::dynamic_config:
   http:
     middlewares:

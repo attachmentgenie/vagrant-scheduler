@@ -11,6 +11,7 @@ job "example" {
     count = 2
 
     network {
+      mode = "bridge"
       port "http" {
         to = 80
       }
@@ -18,13 +19,16 @@ job "example" {
 
     service {
       name = "example"
-      tags = ["traefik.enable=true"]
+      tags = [
+        "traefik.enable=true",
+        "traefik.http.routers.example.rule=Host(`example.traefik`)"
+      ]
       port = "http"
 
-      check {
-        type     = "tcp"
-        interval = "10s"
-        timeout  = "2s"
+      connect {
+        sidecar_service {
+          tags = ["sidecar"]
+        }
       }
     }
 

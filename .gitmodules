@@ -24,7 +24,7 @@
 	url = https://github.com/saz/puppet-resolv_conf.git
 [submodule "production/modules/nomad"]
 	path = production/modules/nomad
-	url = git@github.com:attachmentgenie/puppet-nomad.git 
+	url = https://github.com/voxpupuli/puppet-nomad.git
 [submodule "production/modules/concat"]
 	path = production/modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat.git

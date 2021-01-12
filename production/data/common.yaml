@@ -18,9 +18,64 @@ profiles::orchestration::consul::config:
   retry_join:
     - nomad.scheduler.vagrant
 profiles::orchestration::consul::config_defaults:
- advertise_addr: '%{::ipaddress_eth1}'
- data_dir: /var/lib/consul
- datacenter: services
+  advertise_addr: '%{::ipaddress_eth1}'
+  data_dir: /var/lib/consul
+  datacenter: services
+  connect:
+    enabled: true
+  enable_central_service_config: true
+  config_entries:
+    bootstrap:
+      - kind: "proxy-defaults"
+        name: "global"
+        config:
+          protocol: http
+          envoy_prometheus_bind_addr: '%{::ipaddress_eth1}:9103'
+          envoy_extra_static_clusters_json: |+
+            <<EOF
+            {
+              "connect_timeout": "3.000s",
+              "dns_lookup_family": "V4_ONLY",
+              "lb_policy": "ROUND_ROBIN",
+              "load_assignment": {
+                "cluster_name": "zipkin",
+                "endpoints": [
+                  {
+                    "lb_endpoints": [
+                      {
+                        "endpoint": {
+                          "address": {
+                            "socket_address": {
+                              "address": "tempo.service.consul",
+                              "port_value": 9411,
+                              "protocol": "TCP"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "name": "zipkin",
+              "type": "STRICT_DNS"
+            }
+            EOF
+          envoy_tracing_json: |+
+            <<EOF
+            {
+              "http": {
+                "name": "envoy.zipkin",
+                "config": {
+                  "collector_cluster": "zipkin",
+                  "collector_endpoint": "/api/v1/spans"
+                }
+              }
+            }
+            EOF
+  telemetry:
+   prometheus_retention_time: "30s"
+   disable_hostname: true
 profiles::orchestration::consul::connect: true
 profiles::orchestration::consul::sd_service_endpoint: 'http://%{::ipaddress_eth1}:8500'
 profiles::scheduling::nomad::config:
@@ -39,6 +94,12 @@ profiles::scheduling::nomad::config_defaults:
    address: '127.0.0.1:8500'
  data_dir: /var/lib/nomad
  datacenter: services
+ telemetry:
+   collection_interval: '1s'
+   disable_hostname: true
+   prometheus_metrics: true
+   publish_allocation_metrics: true
+   publish_node_metrics: true
  vault:
    enabled: true
    address: 'http://active.vault.service.consul:8200'
