@@ -11,7 +11,6 @@ job "demo-web" {
     count = 2
 
     network {
-      mode = "bridge"
       port "http" {
         to = 8080
       }
@@ -26,18 +25,6 @@ job "demo-web" {
         "traefik.enable=true",
         "traefik.http.routers.demo-web.rule=Host(`demo.traefik`)"
       ]
-
-      connect {
-        sidecar_service {
-          tags = ["sidecar"]
-          proxy {
-            upstreams {
-              destination_name = "demo-db"
-              local_bind_port = 5432
-            }
-          }
-        }
-      }
     }
 
     task "server" {
@@ -59,8 +46,8 @@ job "demo-web" {
         data = <<EOF
 {{ with secret "database/creds/accessdb" }}
   {
-    "host": "localhost",
-    "port": 5432,
+    "host": "demo-db.service.consul",
+    "port": 25432,
     "username": "{{ .Data.username }}",
     "password": {{ .Data.password | toJSON }},
     "db": "postgres"

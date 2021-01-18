@@ -5,8 +5,8 @@ job "demo-db" {
   group "db" {
 
     network {
-      mode = "bridge"
       port  "db"{
+        static = 25432
         to = 5432
       }
     }
@@ -14,10 +14,6 @@ job "demo-db" {
     service {
       name = "demo-db"
       port = "db"
-
-      connect {
-        sidecar_service {}
-      }
     }
 
     task "server" {

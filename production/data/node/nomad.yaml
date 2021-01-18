@@ -27,7 +27,7 @@ profiles::scheduling::nomad::config:
     bootstrap_expect: 1
   vault:
     create_from_role: nomad-cluster
-    token: 's.RxExpkyh2bYBZVmXjTwzEi8G'
+    token: 's.eiveqwggWRGZ8Wje4d4hYsnG'
 profiles::scheduling::nomad::sd_service_tags:
   - "traefik.enable=true"
   - "traefik.http.routers.nomad-ui.middlewares=auth@file"

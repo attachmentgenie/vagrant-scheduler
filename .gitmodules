@@ -55,3 +55,6 @@
 [submodule "production/modules/traefik2"]
 	path = production/modules/traefik2
 	url = git@github.com:attachmentgenie/attachmentgenie-traefik2.git
+[submodule "production/modules/hashi_stack"]
+	path = production/modules/hashi_stack
+	url = https://github.com/voxpupuli/puppet-hashi_stack.git

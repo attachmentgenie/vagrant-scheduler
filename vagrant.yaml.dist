@@ -28,7 +28,7 @@ nodes:
           dst: '/home/vagrant/nomad'
       provision_type:  puppet_agent
       puppetmaster: puppet.scheduler.vagrant
-      provision_shell: "/usr/local/bin/nomad job run -detach /home/vagrant/nomad/example.nomad"
+      provision_shell: "/bin/nomad job run -detach /home/vagrant/nomad/example.nomad; /bin/nomad job run -detach /home/vagrant/nomad/demo-connect.nomad"
     - name: proxy
       hostname: proxy.scheduler.vagrant
       aliases: consul.traefik dashboard.traefik demo.traefik example.traefik nomad.traefik vault.traefik
