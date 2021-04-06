@@ -38,9 +38,7 @@ nodes:
           echo $VAULT_KEY > /etc/vault_key.txt
         }
         function unseal_vault {
-          VAULT_TOKEN=$(cat /etc/vault_token.txt)
           VAULT_KEY=$(cat /etc/vault_key.txt)
-          export VAULT_TOKEN
           /usr/bin/vault operator unseal "$VAULT_KEY"
         }
         VAULT_INITILIAZED=$(vault status | grep '^Initialized' | awk '{print $2}')
