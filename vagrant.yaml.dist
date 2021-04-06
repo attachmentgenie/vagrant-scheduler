@@ -29,7 +29,7 @@ nodes:
       provision_type:  puppet_agent
       puppetmaster: puppet.scheduler.vagrant
       provision_shell: |
-        export VAULT_ADDR=http://192.168.28.40:8200
+        export VAULT_ADDR=http://192.168.45.43:8200
         function initialize_vault {
           /usr/bin/vault operator init -key-shares=1 -key-threshold=1 | tee vault.keys
           VAULT_TOKEN=$(grep '^Initial' vault.keys | awk '{print $4}')
@@ -80,5 +80,5 @@ nodes:
       memory: 2048
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
-puppet_version: 6.19.1
+puppet_version: 6.21.1
 virtualbox_group: '/Vagrant/scheduler'

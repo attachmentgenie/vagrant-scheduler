@@ -83,7 +83,6 @@ The job will patiently wait until nodes that meet the constrains become availabl
 
 The demo job automates the nomad vault integration example [1], and is a somewhat more elaborate job that requires a bit of manual orchestration.
 
-intialize and unlock vault, single unlock setup is fine for this vagrant setup, please set up something more robust in prod.
 copy the root token into terraform/vault.tf and production/hieradata/node/nomad.yaml, again this is fine for this vagrant setup, please set up something more robust in prod.
 
     export NOMAD_ADDR=http://nomad.scheduler.vagrant:4646
@@ -101,7 +100,6 @@ It is not a guide on how to setup a secure Puppet and Vault environment.
 
 In particular this means:
 
-* Vault should be on it's own dedicated node rather than the same server as the puppet master
-* Vault is being initialzed and unsealed automatically and the root token saved to a file on disk, this should be a manual step or use Vault Cloud Autounseal
+* Vault is being initialzed and unsealed automatically and the root token saved to a file on disk.
 
-For a non publicly reachable playground this should be acceptable.
+This is wildly insecure and is only done for demonstration purposes.
