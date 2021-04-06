@@ -28,7 +28,37 @@ nodes:
           dst: '/home/vagrant/nomad'
       provision_type:  puppet_agent
       puppetmaster: puppet.scheduler.vagrant
-      provision_shell: "/bin/nomad job run -detach /home/vagrant/nomad/example.nomad; /bin/nomad job run -detach /home/vagrant/nomad/demo-connect.nomad"
+      provision_shell: |
+        export VAULT_ADDR=http://192.168.28.40:8200
+        function initialize_vault {
+          /usr/bin/vault operator init -key-shares=1 -key-threshold=1 | tee vault.keys
+          VAULT_TOKEN=$(grep '^Initial' vault.keys | awk '{print $4}')
+          VAULT_KEY=$(grep '^Unseal Key 1:' vault.keys | awk '{print $4}')
+          echo $VAULT_TOKEN > /etc/vault_token.txt
+          echo $VAULT_KEY > /etc/vault_key.txt
+        }
+        function unseal_vault {
+          VAULT_TOKEN=$(cat /etc/vault_token.txt)
+          VAULT_KEY=$(cat /etc/vault_key.txt)
+          echo $VAULT_KEY
+          export VAULT_TOKEN
+          /usr/bin/vault operator unseal "$VAULT_KEY"
+        }
+        VAULT_INITILIAZED=$(vault status | grep '^Initialized' | awk '{print $2}')
+        if [ "$VAULT_INITILIAZED" = "true" ]
+        then
+          echo "vault is already initialized....moving on"
+        else
+          initialize_vault
+        fi
+        VAULT_SEALED=$(vault status | grep '^Sealed' | awk '{print $2}')
+        if [ "$VAULT_SEALED" = "true" ]
+        then
+          unseal_vault
+        else
+          echo "vault is already unsealed....moving on"
+        fi
+        /bin/nomad job run -detach /home/vagrant/nomad/example.nomad; /bin/nomad job run -detach /home/vagrant/nomad/demo-connect.nomad
     - name: proxy
       hostname: proxy.scheduler.vagrant
       aliases: consul.traefik dashboard.traefik demo.traefik example.traefik nomad.traefik vault.traefik

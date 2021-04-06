@@ -93,3 +93,15 @@ copy the root token into terraform/vault.tf and production/hieradata/node/nomad.
     curl http://demo.traefik/names
 
 [1] https://www.nomadproject.io/guides/integrations/vault-integration/index.html
+
+# Security
+
+This repository is meant as a non-production sandbox setup.
+It is not a guide on how to setup a secure Puppet and Vault environment.
+
+In particular this means:
+
+* Vault should be on it's own dedicated node rather than the same server as the puppet master
+* Vault is being initialzed and unsealed automatically and the root token saved to a file on disk, this should be a manual step or use Vault Cloud Autounseal
+
+For a non publicly reachable playground this should be acceptable.
