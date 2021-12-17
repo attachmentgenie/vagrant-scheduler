@@ -3,4 +3,6 @@ classes:
   - roles::dns
 profiles::dns::bind: true
 profiles::dns::bind::forward_consul: true
-...
+profiles::dns::bind::zones:
+  '1.168.192.in-addr.arpa': {}
+  'attachmentgenie.lab': {}
