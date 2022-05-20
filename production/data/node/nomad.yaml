@@ -7,9 +7,6 @@ profiles::orchestration::consul::config:
   server: true
   ui_config:
     enabled: true
-    metrics_provider: "prometheus"
-    metrics_proxy:
-      base_url: "http://192.168.45.46:21538/"
 profiles::orchestration::consul::server: true
 profiles::orchestration::consul::manage_sd_service: true
 profiles::orchestration::consul::sd_service_tags:
