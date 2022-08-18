@@ -54,7 +54,7 @@ A vagrant setup that create container schedulers
         - http://proxy.scheduler.vagrant:8080
         - http://consul.traefik admin:secret
         - http://dashboard.traefik admin:secret
-        - http://demo.traefik/names
+        - http://countdash.traefik/names
         - http://example.traefik
         - http://nomad.traefik admin:secret
         - http://vault.traefik

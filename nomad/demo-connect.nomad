@@ -33,6 +33,10 @@ job "countdash" {
 
     service {
       name = "count-dashboard"
+      tags = [
+        "traefik.enable=true",
+        "traefik.http.routers.countdash.rule=Host(`countdash.traefik`)"
+      ]
       port = "9002"
 
       connect {

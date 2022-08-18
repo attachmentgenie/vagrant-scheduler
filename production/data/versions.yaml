@@ -1,0 +1,7 @@
+---
+profiles::orchestration::consul::version: '1.13.1'
+profiles::scheduling::nomad::cni_plugins::version: 'v1.1.1'
+profiles::scheduling::nomad::version: '1.3.3'
+profiles::security::vault::version: '1.11.2'
+profiles::website::traefik2::version: '2.8.3'
+...
