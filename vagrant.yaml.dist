@@ -68,6 +68,9 @@ nodes:
       box: bento/centos-7.9
       ip: 192.168.56.45
       memory: 2048
+      disks:
+      - name: nomad
+        size: 5
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
     - name: node2
@@ -75,6 +78,9 @@ nodes:
       box: bento/centos-7.9
       ip: 192.168.56.46
       memory: 2048
+      disks:
+      - name: nomad
+        size: 5
       provision_type: puppet_agent
       puppetmaster: puppet.scheduler.vagrant
 virtualbox_group: '/Vagrant/scheduler'
